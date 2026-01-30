@@ -22,9 +22,6 @@ const STATUS_FILTERS: Array<EventStatus | "ALL"> = [
   "DONE",
 ];
 
-// =====================
-// Utils
-// =====================
 const getEventStatus = (
   startDateTime: string,
   endDateTime: string
@@ -38,9 +35,6 @@ const getEventStatus = (
   return "DONE";
 };
 
-// =====================
-// Mock Data
-// =====================
 const MOCK_EVENTS: EventItem[] = [
   {
     id: 1,

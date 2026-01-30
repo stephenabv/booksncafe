@@ -8,7 +8,7 @@ import CafeMenu from "./components/CafeMenu";
 import Events from "./components/Events";
 import About from "./components/About";
 import NotFound from "./components/NotFound";
-import ViewCart from "./components/CArt";
+import ViewCart from "./components/Cart";
 
 const AppRouter: React.FC = () => {
   const location = useLocation();

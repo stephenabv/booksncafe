@@ -8,11 +8,10 @@ type GroupedCartItem = CartItem & {
   count: number;
 };
 
-const VAT_RATE = 0.12; // 12% VAT included in price
+const VAT_RATE = 0.12;
 
-// Hardcoded coupon
 const COUPON_CODE = "SAVE10";
-const COUPON_DISCOUNT = 0.10; // 10% discount
+const COUPON_DISCOUNT = 0.10;
 
 const ViewCart: React.FC = () => {
   const { cart, removeFromCart, getTotalItems, getTotalPrice } = useCart();
@@ -22,7 +21,6 @@ const ViewCart: React.FC = () => {
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
 
-  // Group items by type + id
   const groupedItems: Record<string, GroupedCartItem> = cart.reduce(
     (acc, item) => {
       const key = `${item.type}-${item.id}`;
