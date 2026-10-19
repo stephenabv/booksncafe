@@ -16,12 +16,15 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 
   return (
     <CartProvider>
-      <AnnouncementBar items={announcements} />
-      <SiteHeader />
-      <main id="main" tabIndex={-1} className="focus:outline-none">
-        {children}
-      </main>
-      <SiteFooter />
+      {/* .site-theme scopes the dark palette to the public site (see globals.css). */}
+      <div className="site-theme min-h-dvh bg-cream-50 text-espresso-900 transition-colors duration-300">
+        <AnnouncementBar items={announcements} />
+        <SiteHeader />
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
+        <SiteFooter />
+      </div>
       <JsonLd data={websiteJsonLd(settings.businessName)} />
       <JsonLd data={businessJsonLd(settings, hours, social.map((s) => s.url))} />
     </CartProvider>

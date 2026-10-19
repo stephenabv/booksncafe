@@ -2,7 +2,7 @@ import { describeHours, weekFromMonday, type DailyHours, type SpecialHoursEntry 
 
 export function HoursTable({ hours, special, tone = "light" }: { hours: DailyHours[]; special: SpecialHoursEntry[]; tone?: "light" | "dark" }) {
   const week = weekFromMonday(hours).filter((d) => d.known);
-  const muted = tone === "dark" ? "text-cream-300" : "text-espresso-600";
+  const muted = tone === "dark" ? "text-paper-300" : "text-espresso-600";
   return (
     <div className="space-y-4">
       <table className="w-full text-sm">

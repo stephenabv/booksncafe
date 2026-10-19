@@ -22,11 +22,11 @@ export async function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-24 bg-espresso-950 text-cream-100">
+    <footer className="mt-24 bg-night-950 text-paper-100">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
-          <p className="font-display text-xl font-semibold text-cream-50">{settings.businessName}</p>
-          {settings.tagline && <p className="text-sm text-cream-300">{settings.tagline}</p>}
+          <p className="font-display text-xl font-semibold text-paper-50">{settings.businessName}</p>
+          {settings.tagline && <p className="text-sm text-paper-300">{settings.tagline}</p>}
           <ul className="space-y-2 text-sm">
             {address && (
               <li className="flex gap-2">
@@ -97,14 +97,14 @@ export async function SiteFooter() {
 
         <div className={hours.length > 0 ? "" : "lg:col-span-2"}>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-amber-brand">Stay in the loop</h2>
-          <p className="mt-3 text-sm text-cream-300">Get updates on new books, events, and coffee specials.</p>
+          <p className="mt-3 text-sm text-paper-300">Get updates on new books, events, and coffee specials.</p>
           <div className="mt-3">
             <NewsletterForm />
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <p className="container-page py-6 text-center text-xs text-cream-300">
+      <div className="border-t border-paper-50/10">
+        <p className="container-page py-6 text-center text-xs text-paper-300">
           © {year} {settings.businessName}. All rights reserved.
         </p>
       </div>

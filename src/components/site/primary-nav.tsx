@@ -43,7 +43,7 @@ export function PrimaryNav({ items }: { items: NavItem[] }) {
 
   const linkClass = (href: string) =>
     `rounded-full px-3 py-2 text-sm font-medium transition-colors ${
-      isActive(pathname, href) ? "bg-white/10 text-amber-brand-light" : "text-cream-100 hover:text-amber-brand-light"
+      isActive(pathname, href) ? "bg-paper-50/10 text-amber-brand-light" : "text-paper-100 hover:text-amber-brand-light"
     }`;
 
   return (
@@ -63,7 +63,7 @@ export function PrimaryNav({ items }: { items: NavItem[] }) {
       <button
         ref={toggleRef}
         type="button"
-        className="inline-flex size-11 items-center justify-center rounded-full text-cream-100 hover:bg-white/10 md:hidden"
+        className="inline-flex size-11 items-center justify-center rounded-full text-paper-100 hover:bg-paper-50/10 md:hidden"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
@@ -75,7 +75,7 @@ export function PrimaryNav({ items }: { items: NavItem[] }) {
       <div
         id={panelId}
         hidden={!open}
-        className="absolute inset-x-0 top-full border-t border-white/10 bg-espresso-900 shadow-lg md:hidden"
+        className="absolute inset-x-0 top-full border-t border-paper-50/10 bg-night-900 shadow-lg md:hidden"
       >
         <nav aria-label="Mobile">
           <ul className="container-page flex flex-col gap-1 py-4">
