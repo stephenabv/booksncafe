@@ -9,7 +9,7 @@ export function NewsletterForm() {
   const [state, action, pending] = useActionState(subscribeToNewsletter, initial);
   return (
     <form action={action} className="space-y-2" noValidate={false}>
-      <label htmlFor="newsletter-email" className="text-sm text-cream-200">
+      <label htmlFor="newsletter-email" className="text-sm text-paper-200">
         Email address
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -21,7 +21,7 @@ export function NewsletterForm() {
           autoComplete="email"
           maxLength={254}
           placeholder="you@example.com"
-          className="min-h-11 w-full rounded-full border border-white/20 bg-white/5 px-4 text-sm text-cream-50 placeholder:text-cream-300/70 focus:border-amber-brand focus:outline-none"
+          className="min-h-11 w-full rounded-full border border-paper-50/20 bg-paper-50/5 px-4 text-sm text-paper-50 placeholder:text-paper-300/70 focus:border-amber-brand focus:outline-none"
           aria-describedby="newsletter-status"
         />
         <button type="submit" className="btn-primary shrink-0" disabled={pending}>

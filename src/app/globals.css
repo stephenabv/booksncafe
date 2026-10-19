@@ -21,6 +21,17 @@
   --color-leaf: #2f6b3a;
   --color-berry: #9b2c2c;
 
+  /*
+   * Fixed "chrome" tokens for surfaces that are dark in both themes (header,
+   * footer, hero). They never flip, unlike espresso/cream below.
+   */
+  --color-night-950: #1c130d;
+  --color-night-900: #2b1d14;
+  --color-paper-50: #fdfaf5;
+  --color-paper-100: #f8f1e6;
+  --color-paper-200: #efe3d0;
+  --color-paper-300: #e2d0b3;
+
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
@@ -38,7 +49,35 @@
   }
 }
 
+/*
+ * Dark theme for the public site. <html data-theme> is set before first paint
+ * by the inline script in the root layout. Only descendants of .site-theme
+ * flip, so the admin dashboard keeps its own light palette. Light surfaces
+ * (cream, white) become warm darks and espresso text becomes cream; the
+ * pairs keep WCAG AA contrast.
+ */
 @layer base {
+  [data-theme="dark"] .site-theme {
+    color-scheme: dark;
+    --color-cream-50: #15100b;
+    --color-cream-100: #211811;
+    --color-cream-200: #33261b;
+    --color-cream-300: #4a3726;
+    --color-white: #1d150f;
+    --color-espresso-950: #fdfaf5;
+    --color-espresso-900: #f6eee2;
+    --color-espresso-800: #ead9c2;
+    --color-espresso-700: #d8c4a8;
+    --color-espresso-600: #bea687;
+    --color-amber-ink: #f2b766;
+    --color-leaf: #86c994;
+    --color-berry: #f19a9a;
+  }
+
+  html[data-theme="dark"] {
+    background-color: #15100b;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 6rem;
@@ -86,13 +125,13 @@
   @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60;
 }
 @utility btn-primary {
-  @apply btn bg-amber-brand text-espresso-950 hover:bg-amber-brand-light;
+  @apply btn bg-amber-brand text-night-950 hover:bg-amber-brand-light;
 }
 @utility btn-secondary {
   @apply btn border border-espresso-800/25 bg-white/70 text-espresso-900 hover:border-espresso-800/50 hover:bg-white;
 }
 @utility btn-on-dark {
-  @apply btn border border-cream-100/40 text-cream-50 hover:border-cream-100 hover:bg-white/10;
+  @apply btn border border-paper-100/40 text-paper-50 hover:border-paper-100 hover:bg-paper-50/10;
 }
 
 @utility card {

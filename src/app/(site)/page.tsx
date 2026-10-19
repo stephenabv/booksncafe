@@ -50,9 +50,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      {/* Full-screen hero: fills the viewport below the sticky header (h-16) on every screen size. */}
-      <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden bg-espresso-950 text-cream-50">
+      {/* Full-screen hero: pulled up 4rem (-mt-16) beneath the transparent sticky header so it fills the viewport. */}
+      <section className="relative isolate flex -mt-16 min-h-svh items-end overflow-hidden bg-night-950 text-paper-50">
         <Image
           src={banner}
           alt=""
@@ -64,13 +63,13 @@ export default async function HomePage() {
           className="-z-10 object-cover object-center"
         />
         {/* Two scrims keep the copy legible over the bright illustration: bottom-up everywhere, left-to-right from sm. */}
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-espresso-950/95 via-espresso-950/50 to-espresso-950/10" aria-hidden />
-        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-espresso-950/85 via-espresso-950/35 to-transparent sm:block" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-night-950/95 via-night-950/50 to-night-950/10" aria-hidden />
+        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-night-950/85 via-night-950/35 to-transparent sm:block" aria-hidden />
         <div className="container-page w-full pb-20 pt-32 sm:pb-24">
           <div className="max-w-3xl motion-safe:animate-fade-up">
             {settings.tagline && <p className="eyebrow text-amber-brand-light">{settings.tagline}</p>}
             <h1 className="mt-3 text-5xl font-semibold leading-[1.05] sm:text-7xl">{page?.heading ?? settings.businessName}</h1>
-            {page?.intro && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream-100 sm:text-xl">{page.intro}</p>}
+            {page?.intro && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-paper-100 sm:text-xl">{page.intro}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/books" className="btn-primary">
                 Explore books
@@ -80,18 +79,18 @@ export default async function HomePage() {
               </Link>
             </div>
             {today && (
-              <p className="mt-8 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm">
+              <p className="mt-8 inline-flex items-center gap-2 rounded-full bg-paper-50/10 px-4 py-2 text-sm">
                 <Clock aria-hidden className="size-4 text-amber-brand-light" />
                 <span className="font-semibold">{today.isOpen ? "Open now" : "Closed now"}</span>
-                <span className="text-cream-200">· {today.label}</span>
-                {today.note && <span className="text-cream-200">({today.note})</span>}
+                <span className="text-paper-200">· {today.label}</span>
+                {today.note && <span className="text-paper-200">({today.note})</span>}
               </p>
             )}
           </div>
         </div>
         <a
           href="#home-content"
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs font-medium uppercase tracking-widest text-cream-200 hover:text-amber-brand-light sm:flex"
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs font-medium uppercase tracking-widest text-paper-200 hover:text-amber-brand-light sm:flex"
         >
           Scroll
           <ChevronDown aria-hidden className="size-5 motion-safe:animate-bounce" />
