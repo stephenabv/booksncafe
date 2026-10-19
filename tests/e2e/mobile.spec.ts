@@ -24,3 +24,11 @@ test("pages do not scroll horizontally on a phone", async ({ page }) => {
     expect(overflow, path).toBeLessThanOrEqual(0);
   }
 });
+
+test("the newsletter field is wide enough on a phone", async ({ page }) => {
+  await page.goto("/about");
+  const input = page.getByLabel("Email address");
+  await input.fill("firstname.lastname@example.com");
+  const clipped = await input.evaluate((el: HTMLInputElement) => el.scrollWidth > el.clientWidth);
+  expect(clipped).toBe(false);
+});

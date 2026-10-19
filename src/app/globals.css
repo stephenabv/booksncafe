@@ -102,6 +102,15 @@
     --color-berry: #f19a9a;
   }
 
+  /* Height of the announcement bar above the header, for the full-screen hero.
+     A one-line estimate until AnnouncementHeight measures the real value. */
+  .site-theme {
+    --announcement-h: 0px;
+  }
+  .site-theme:has([data-announcement]) {
+    --announcement-h: 2.25rem;
+  }
+
   html[data-theme="dark"] {
     background-color: #15100b;
   }

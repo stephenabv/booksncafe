@@ -1,5 +1,6 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { resolveToday } from "@/lib/hours";
 import {
   getNavLinks,
   getOpeningHours,
@@ -20,10 +21,23 @@ export async function SiteFooter() {
   ]);
   const address = [settings.streetAddress, settings.locality, settings.region, settings.postalCode].filter(Boolean).join(", ");
   const year = new Date().getFullYear();
+  // Pages revalidate every few minutes, so "today" is at most that stale.
+  const today = resolveToday(hours, special, settings.timezone);
 
   return (
     <footer className="mt-24 bg-night-950 text-paper-100">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+      {/* Newsletter band: full width so the email field has room for a whole address. */}
+      <div className="border-b border-paper-50/10">
+        <div className="container-page grid gap-6 py-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-12">
+          <div>
+            <h2 className="font-display text-2xl font-semibold text-paper-50">Stay in the loop</h2>
+            <p className="mt-2 text-sm text-paper-300">Get updates on new books, events, and coffee specials.</p>
+          </div>
+          <NewsletterForm />
+        </div>
+      </div>
+
+      <div className="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[minmax(0,5fr)_minmax(0,3fr)_minmax(0,4fr)] lg:gap-12">
         <div className="space-y-3">
           <p className="font-display text-xl font-semibold text-paper-50">{settings.businessName}</p>
           {settings.tagline && <p className="text-sm text-paper-300">{settings.tagline}</p>}
@@ -49,9 +63,9 @@ export async function SiteFooter() {
               </li>
             )}
             {settings.email && (
-              <li className="flex gap-2">
+              <li className="flex min-w-0 gap-2">
                 <Mail aria-hidden className="mt-0.5 size-4 shrink-0 text-amber-brand" />
-                <a href={`mailto:${settings.email}`} className="hover:text-amber-brand-light hover:underline">
+                <a href={`mailto:${settings.email}`} className="break-all hover:text-amber-brand-light hover:underline">
                   {settings.email}
                 </a>
               </li>
@@ -87,21 +101,28 @@ export async function SiteFooter() {
         </nav>
 
         {hours.length > 0 && (
-          <div>
-            <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-amber-brand">Opening hours</h2>
+          // Native <details>: collapsible without JavaScript and announced as expandable by screen readers.
+          <details className="group sm:col-span-2 lg:col-span-1">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-lg py-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-brand [&::-webkit-details-marker]:hidden">
+              {/* <summary> only allows phrasing content alongside a heading, so the label is a span. */}
+              <span>
+                <span className="block font-sans text-sm font-semibold uppercase tracking-widest text-amber-brand">Opening hours</span>
+                {today && (
+                  <span className="mt-2 block text-sm text-paper-100">
+                    {today.label}
+                    {today.note && <span className="text-paper-300"> ({today.note})</span>}
+                  </span>
+                )}
+                <span className="mt-1 block text-xs text-paper-300 group-open:hidden">Show all days</span>
+                <span className="mt-1 hidden text-xs text-paper-300 group-open:block">Hide</span>
+              </span>
+              <ChevronDown aria-hidden className="mt-0.5 size-5 shrink-0 text-amber-brand transition-transform group-open:rotate-180" />
+            </summary>
             <div className="mt-3">
               <HoursTable hours={hours} special={special} tone="dark" />
             </div>
-          </div>
+          </details>
         )}
-
-        <div className={hours.length > 0 ? "" : "lg:col-span-2"}>
-          <h2 className="font-sans text-sm font-semibold uppercase tracking-widest text-amber-brand">Stay in the loop</h2>
-          <p className="mt-3 text-sm text-paper-300">Get updates on new books, events, and coffee specials.</p>
-          <div className="mt-3">
-            <NewsletterForm />
-          </div>
-        </div>
       </div>
       <div className="border-t border-paper-50/10">
         <p className="container-page py-6 text-center text-xs text-paper-300">
