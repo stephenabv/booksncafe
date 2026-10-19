@@ -18,7 +18,7 @@ test("mobile navigation opens, links work and Escape closes it", async ({ page }
 });
 
 test("pages do not scroll horizontally on a phone", async ({ page }) => {
-  for (const path of ["/", "/books", "/menu", "/cart", "/admin/login"]) {
+  for (const path of ["/", "/books", "/menu", "/cart", "/syscon/login/admin"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, path).toBeLessThanOrEqual(0);

@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function AdminNavLink({ href, label }: { href: string; label: string }) {
+/** `exact` stops a parent link (the overview) from looking active on every child page. */
+export function AdminNavLink({ href, label, exact = false }: { href: string; label: string; exact?: boolean }) {
   const pathname = usePathname();
-  const active = pathname === href || pathname.startsWith(`${href}/`);
+  const active = pathname === href || (!exact && pathname.startsWith(`${href}/`));
   return (
     <Link
       href={href}

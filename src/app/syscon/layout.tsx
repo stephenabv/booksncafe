@@ -9,5 +9,6 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
-  return <div className="min-h-dvh bg-stone-100 font-sans text-stone-900">{children}</div>;
+  // .admin-theme scopes the admin dark palette (see globals.css).
+  return <div className="admin-theme min-h-dvh bg-stone-100 font-sans text-stone-900 transition-colors duration-300">{children}</div>;
 }

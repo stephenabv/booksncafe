@@ -28,7 +28,7 @@ See [`.env.example`](../.env.example). All are set per environment in Vercel →
 2. Set `NEXT_PUBLIC_SITE_URL` for Production, `RUN_MIGRATIONS_ON_BUILD=1` for Production and Preview, and the `ADMIN_BOOTSTRAP_*` variables (password at least 12 characters, marked Sensitive).
 3. Redeploy. The build log shows the migration, seed counts, admin bootstrap and the eight verification checks.
 4. Merge the PR. The production build prepares the production database the same way and deploys.
-5. Smoke test: `/`, `/books`, `/books/1984`, `/menu`, `/events`, `/about`, `/sitemap.xml`, `/robots.txt`, a missing URL (should be 404), `/admin/login`.
+5. Smoke test: `/`, `/books`, `/books/1984`, `/menu`, `/events`, `/about`, `/sitemap.xml`, `/robots.txt`, a missing URL (should be 404), `/syscon/login/admin`. The old `/admin` address should return 404.
 6. Submit `https://<domain>/sitemap.xml` in Google Search Console.
 
 ## Ongoing schema changes
@@ -53,7 +53,7 @@ Public pages are statically generated with a 5-minute ISR window. Every successf
 - [x] Login is rate-limited (5 per email and 20 per IP per 15 minutes), as are coupon checks (20 per IP per 10 minutes) and newsletter sign-ups (5 per IP per hour), all in Postgres.
 - [x] All admin input is validated with Zod on the server. Image and link fields reject `javascript:`, `data:` and protocol-relative URLs, and image hosts are allow-listed.
 - [x] Cart prices and coupons are computed on the server. The browser sends only item ids and quantities.
-- [x] Security headers: CSP, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy` and HSTS. `/admin` responses carry `X-Robots-Tag: noindex` and `Cache-Control: no-store`.
+- [x] Security headers: CSP, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy` and HSTS. Admin responses (everything under `/syscon`) carry `X-Robots-Tag: noindex` and `Cache-Control: no-store`.
 - [x] Errors shown to users are generic, and details are logged server-side only.
 - [x] The subscriber CSV export neutralizes spreadsheet formula injection.
 - [ ] **Owner action:** turn on Vercel Deployment Protection for Preview deployments if previews should not be public.

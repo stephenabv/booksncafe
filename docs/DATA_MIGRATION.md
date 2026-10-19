@@ -30,7 +30,7 @@ On Vercel, steps 3 to 6 run automatically during the build when `RUN_MIGRATIONS_
 4. **Import content.** `npm run db:seed`, which prints the number of rows inserted per table. Expected on an empty database: settings 1, nav 10, pages 6, books 4, menu 11, events 2, team 1, coupons 1.
 5. **Create the owner account.** `npm run admin:create -- --email <owner email> --role admin --name "<name>"` (prompts for a password of at least 12 characters).
 6. **Verify.** `npm run db:verify` checks row counts, representative records (e.g. the Espresso price), required fields, relationships and that an active admin exists. Do not deploy if any check fails.
-7. **Deploy.** Merge the PR (or promote the preview). Then spot-check `/`, `/books/1984`, `/menu`, `/sitemap.xml` and sign in to `/admin`.
+7. **Deploy.** Merge the PR (or promote the preview). Then spot-check `/`, `/books/1984`, `/menu`, `/sitemap.xml` and sign in at `/syscon/login/admin`.
 
 ## Rollback
 

@@ -12,7 +12,7 @@ Branch `claude/booksncafe-modernization-f2lac7`, 2026-10-19.
 | 4 | Schema and versioned migrations | `src/server/db/schema.ts`, `drizzle/`, [DATABASE.md](DATABASE.md) |
 | 5 | Data migration and verification | `scripts/seed*.ts`, `scripts/verify.ts`, `scripts/backup.ts`, [DATA_MIGRATION.md](DATA_MIGRATION.md) |
 | 6 | Admin authentication and authorization | `src/server/auth`, `scripts/create-admin.ts` |
-| 7 | Admin dashboard | `/admin`: business details, opening and holiday hours, pages and SEO, announcements, FAQs, team, navigation, social links, books, menu, events, coupons, newsletter subscribers (with CSV export) |
+| 7 | Admin dashboard | `/syscon/admin` (sign-in at `/syscon/login/admin`): business details, opening and holiday hours, pages and SEO, announcements, FAQs, team, navigation, social links, books, menu, events, coupons, newsletter subscribers (with CSV export) |
 | 8 | Redesigned public site | `src/app/(site)`, `src/components/site` |
 | 9 | Customer-facing content | Existing copy preserved; placeholder content removed; sections hidden until real data exists |
 | 10 | SEO | Per-page metadata from the database, canonical URLs, Open Graph/Twitter, `sitemap.xml`, `robots.txt`, JSON-LD (WebSite, Organization or CafeOrCoffeeShop/BookStore, BreadcrumbList, Book with Offer, Event, FAQPage), real 404s, `noindex` on admin, cart and filtered listings |

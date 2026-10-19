@@ -2,6 +2,7 @@ import { count, eq } from "drizzle-orm";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminPageTitle } from "@/components/admin/page-title";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getDb } from "@/server/db/client";
 import { books, events, menuItems, newsletterSubscribers, openingHours, socialLinks } from "@/server/db/schema";
@@ -44,10 +45,10 @@ export default async function AdminHome({ searchParams }: { searchParams: Search
   ].filter(Boolean) as string[];
 
   const cards = [
-    { label: "Books", value: `${bookPublished} / ${bookTotal}`, hint: "published / total", href: "/admin/r/books" },
-    { label: "Menu items", value: `${menuPublished} / ${menuTotal}`, hint: "published / total", href: "/admin/r/menu" },
-    { label: "Events", value: `${eventPublished} / ${eventTotal}`, hint: "published / total", href: "/admin/r/events" },
-    { label: "Subscribers", value: String(subs?.n ?? 0), hint: "newsletter sign-ups", href: "/admin/subscribers" },
+    { label: "Books", value: `${bookPublished} / ${bookTotal}`, hint: "published / total", href: `${ADMIN_HOME_PATH}/r/books` },
+    { label: "Menu items", value: `${menuPublished} / ${menuTotal}`, hint: "published / total", href: `${ADMIN_HOME_PATH}/r/menu` },
+    { label: "Events", value: `${eventPublished} / ${eventTotal}`, hint: "published / total", href: `${ADMIN_HOME_PATH}/r/events` },
+    { label: "Subscribers", value: String(subs?.n ?? 0), hint: "newsletter sign-ups", href: `${ADMIN_HOME_PATH}/subscribers` },
   ];
 
   return (
@@ -74,14 +75,14 @@ export default async function AdminHome({ searchParams }: { searchParams: Search
             ))}
           </ul>
           {admin.role === "admin" && (
-            <Link href="/admin/settings" className="mt-4 inline-block text-sm font-semibold text-amber-900 underline">
+            <Link href={`${ADMIN_HOME_PATH}/settings`} className="mt-4 inline-block text-sm font-semibold text-amber-900 underline">
               Add business details
             </Link>
           )}
         </section>
       )}
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.filter((c) => c.href !== "/admin/subscribers" || admin.role === "admin").map((c) => (
+        {cards.filter((c) => c.href !== `${ADMIN_HOME_PATH}/subscribers` || admin.role === "admin").map((c) => (
           <li key={c.label}>
             <Link href={c.href} className="block rounded-2xl border border-stone-200 bg-white p-5 hover:border-stone-400">
               <p className="text-sm text-stone-500">{c.label}</p>

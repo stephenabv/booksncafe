@@ -50,13 +50,41 @@
 }
 
 /*
- * Dark theme for the public site. <html data-theme> is set before first paint
- * by the inline script in the root layout. Only descendants of .site-theme
- * flip, so the admin dashboard keeps its own light palette. Light surfaces
- * (cream, white) become warm darks and espresso text becomes cream; the
- * pairs keep WCAG AA contrast.
+ * Dark themes. <html data-theme> is set before first paint by the inline
+ * script in the root layout. Only descendants of .site-theme (public site)
+ * and .admin-theme (admin) flip, each with its own palette. On the site, light
+ * surfaces (cream, white) become warm darks and espresso text becomes cream;
+ * the pairs keep WCAG AA contrast.
  */
 @layer base {
+  /* Admin (sign-in and dashboard): flips Tailwind's stone/amber/red/emerald
+     shades it uses, so the existing utility classes work in both themes. */
+  [data-theme="dark"] .admin-theme {
+    color-scheme: dark;
+    --color-white: #1c1917;
+    --color-stone-50: #24201d;
+    --color-stone-100: #141110;
+    --color-stone-200: #36302c;
+    --color-stone-300: #4a433e;
+    --color-stone-400: #8a817a;
+    --color-stone-500: #a8a29e;
+    --color-stone-600: #c4bdb8;
+    --color-stone-700: #d6d3d1;
+    --color-stone-800: #e7e5e4;
+    --color-stone-900: #f5f5f4;
+    --color-amber-50: #2a2010;
+    --color-amber-300: #b45309;
+    --color-amber-700: #fbbf24;
+    --color-amber-900: #fcd34d;
+    --color-red-50: #2c1414;
+    --color-red-500: #f87171;
+    --color-red-600: #f87171;
+    --color-red-700: #f87171;
+    --color-red-800: #fca5a5;
+    --color-emerald-50: #0f2a1f;
+    --color-emerald-800: #6ee7b7;
+  }
+
   [data-theme="dark"] .site-theme {
     color-scheme: dark;
     --color-cream-50: #15100b;

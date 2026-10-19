@@ -4,6 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { readFormValues, type ActionResult } from "@/lib/admin-fields";
+import { ADMIN_HOME_PATH, ADMIN_LOGIN_PATH } from "@/lib/admin-routes";
 import { isValidTimeZone } from "@/lib/timezone";
 import { httpsUrlField, imageUrlField, optionalText, requiredText, timeField } from "@/lib/validation";
 import { getResource } from "@/server/admin/resources";
@@ -80,12 +81,12 @@ export async function login(_prev: ActionResult, formData: FormData): Promise<Ac
   } catch (error) {
     return failure(error, "Sign-in failed.");
   }
-  redirect("/admin");
+  redirect(ADMIN_HOME_PATH);
 }
 
 export async function logout(): Promise<void> {
   await destroyCurrentSession();
-  redirect("/admin/login");
+  redirect(ADMIN_LOGIN_PATH);
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +131,7 @@ export async function saveRecord(resourceKey: string, id: number | null, _prev: 
   } catch (error) {
     return failure(error, `Could not save the ${resource.singular.toLowerCase()}.`);
   }
-  redirect(`/admin/r/${resource.key}?saved=${savedId}`);
+  redirect(`${ADMIN_HOME_PATH}/r/${resource.key}?saved=${savedId}`);
 }
 
 export async function deleteRecordAction(resourceKey: string, id: number): Promise<ActionResult> {
@@ -146,7 +147,7 @@ export async function deleteRecordAction(resourceKey: string, id: number): Promi
   } catch (error) {
     return failure(error, `Could not delete the ${resource.singular.toLowerCase()}.`);
   }
-  redirect(`/admin/r/${resource.key}?deleted=1`);
+  redirect(`${ADMIN_HOME_PATH}/r/${resource.key}?deleted=1`);
 }
 
 // ---------------------------------------------------------------------------

@@ -52,7 +52,10 @@ test.describe("server-rendered public pages", () => {
 
   test("robots.txt and sitemap.xml are valid", async ({ request }) => {
     const robots = await (await request.get("/robots.txt")).text();
-    expect(robots).toContain("Disallow: /admin");
+    expect(robots).toContain("Disallow: /cart");
+    // The admin address must not be advertised in the public robots.txt.
+    expect(robots).not.toContain("admin");
+    expect(robots).not.toContain("syscon");
     expect(robots).toContain("Sitemap: https://booksncafe.example/sitemap.xml");
 
     const sitemap = await request.get("/sitemap.xml");
@@ -61,7 +64,8 @@ test.describe("server-rendered public pages", () => {
     for (const path of ["/", "/books", "/menu", "/events", "/about", "/books/the-great-gatsby"]) {
       expect(xml).toContain(`<loc>https://booksncafe.example${path}</loc>`);
     }
-    expect(xml).not.toContain("/admin");
+    expect(xml).not.toContain("admin");
+    expect(xml).not.toContain("syscon");
     expect(xml).not.toContain("/cart");
     expect(xml).not.toContain("poetry-night");
   });
