@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Next.js
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# Env files (only the template is committed)
+.env
+.env*.local
+!.env.example
+
+# Tests
+playwright-report
+test-results
+coverage
+
+# Database backups contain business data
+backups/
