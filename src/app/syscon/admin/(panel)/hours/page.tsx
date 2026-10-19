@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminPageTitle } from "@/components/admin/page-title";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getOpeningHours } from "@/server/repositories/site";
 import { HoursForm } from "./hours-form";
@@ -16,7 +17,7 @@ export default async function HoursPage() {
         title="Opening hours"
         description="Regular weekly hours. Days you leave unlisted are not shown on the website. For holidays and one-off changes use Holiday hours."
         actions={
-          <Link href="/admin/r/special-hours" className="text-sm font-semibold text-amber-700 underline">
+          <Link href={`${ADMIN_HOME_PATH}/r/special-hours`} className="text-sm font-semibold text-amber-700 underline">
             Holiday hours
           </Link>
         }

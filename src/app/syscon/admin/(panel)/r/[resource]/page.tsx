@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Cell } from "@/components/admin/cell";
 import { AdminPageTitle, Flash } from "@/components/admin/page-title";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { listRecords } from "@/server/admin/records";
 import { getResource } from "@/server/admin/resources";
 import { requireAdminPage } from "@/server/auth/guard";
@@ -29,7 +30,7 @@ export default async function ResourceListPage({ params, searchParams }: { param
         title={resource.label}
         description={resource.description}
         actions={
-          <Link href={`/admin/r/${resource.key}/new`} className="inline-flex min-h-11 items-center rounded-full bg-stone-900 px-5 text-sm font-semibold text-white hover:bg-stone-700">
+          <Link href={`${ADMIN_HOME_PATH}/r/${resource.key}/new`} className="inline-flex min-h-11 items-center rounded-full bg-stone-900 px-5 text-sm font-semibold text-white hover:bg-stone-700">
             Add {resource.singular.toLowerCase()}
           </Link>
         }
@@ -38,7 +39,7 @@ export default async function ResourceListPage({ params, searchParams }: { param
       {rows.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-stone-300 bg-white px-6 py-12 text-center">
           <p className="font-medium">No {resource.label.toLowerCase()} yet.</p>
-          <Link href={`/admin/r/${resource.key}/new`} className="mt-2 inline-block text-sm font-semibold text-amber-700 underline">
+          <Link href={`${ADMIN_HOME_PATH}/r/${resource.key}/new`} className="mt-2 inline-block text-sm font-semibold text-amber-700 underline">
             Add the first one
           </Link>
         </div>
@@ -66,7 +67,7 @@ export default async function ResourceListPage({ params, searchParams }: { param
                     {resource.listColumns.map((c, i) => (
                       <td key={c.key} className="max-w-xs truncate px-4 py-3">
                         {i === 0 ? (
-                          <Link href={`/admin/r/${resource.key}/${id}`} className="font-medium text-stone-900 hover:underline">
+                          <Link href={`${ADMIN_HOME_PATH}/r/${resource.key}/${id}`} className="font-medium text-stone-900 hover:underline">
                             <Cell value={row[c.key]} kind={c.kind} timeZone={settings.timezone} />
                           </Link>
                         ) : (
@@ -75,7 +76,7 @@ export default async function ResourceListPage({ params, searchParams }: { param
                       </td>
                     ))}
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/r/${resource.key}/${id}`} className="text-sm font-semibold text-amber-700 hover:underline" aria-label={`Edit ${String(row[resource.titleKey])}`}>
+                      <Link href={`${ADMIN_HOME_PATH}/r/${resource.key}/${id}`} className="text-sm font-semibold text-amber-700 hover:underline" aria-label={`Edit ${String(row[resource.titleKey])}`}>
                         Edit
                       </Link>
                     </td>

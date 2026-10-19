@@ -1,4 +1,4 @@
-/** Colour theme for the public site, persisted per browser. */
+/** Colour theme for the site and admin, persisted per browser. */
 export type Theme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "bnc-theme";

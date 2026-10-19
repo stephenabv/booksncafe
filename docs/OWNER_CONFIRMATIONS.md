@@ -1,6 +1,6 @@
 # Information needed from the owner
 
-Nothing below has been published. Each item can be entered in the admin dashboard (`/admin`) without code changes. Until it is entered, the related section stays hidden and search-engine data stays limited to what is known.
+Nothing below has been published. Each item can be entered in the admin dashboard (sign in at `/syscon/login/admin`) without code changes. Until it is entered, the related section stays hidden and search-engine data stays limited to what is known.
 
 ## Missing business details (Admin → Business details / Opening hours)
 

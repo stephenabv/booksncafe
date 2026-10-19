@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AdminPageTitle } from "@/components/admin/page-title";
 import { ResourceForm } from "@/components/admin/resource-form";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { saveRecord } from "@/server/actions/admin";
 import { getRecord, toFormValues } from "@/server/admin/records";
 import { getResource } from "@/server/admin/resources";
@@ -36,7 +37,7 @@ export default async function EditRecordPage({ params }: { params: Params }) {
     <>
       <AdminPageTitle
         title={title}
-        back={{ href: `/admin/r/${resource.key}`, label: resource.label }}
+        back={{ href: `${ADMIN_HOME_PATH}/r/${resource.key}`, label: resource.label }}
         actions={
           publicPath ? (
             <a href={publicPath} target="_blank" rel="noopener" className="text-sm font-semibold text-amber-700 underline">
@@ -50,7 +51,7 @@ export default async function EditRecordPage({ params }: { params: Params }) {
         initialValues={toFormValues(resource.fields, row, settings.timezone)}
         action={saveRecord.bind(null, resource.key, id)}
         submitLabel="Save changes"
-        cancelHref={`/admin/r/${resource.key}`}
+        cancelHref={`${ADMIN_HOME_PATH}/r/${resource.key}`}
         secondaryActions={<DeleteRecordButton resourceKey={resource.key} id={id} title={title} singular={resource.singular} />}
       />
     </>

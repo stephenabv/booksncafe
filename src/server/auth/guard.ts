@@ -1,5 +1,6 @@
 import "server-only";
 import { redirect } from "next/navigation";
+import { ADMIN_HOME_PATH, ADMIN_LOGIN_PATH } from "@/lib/admin-routes";
 import { hasRole, type AdminRole } from "./roles";
 import { getCurrentAdmin, type AdminIdentity } from "./session";
 
@@ -20,8 +21,8 @@ export class AuthorizationError extends Error {
  */
 export async function requireAdminPage(required: AdminRole = "editor"): Promise<AdminIdentity> {
   const admin = await getCurrentAdmin();
-  if (!admin) redirect("/admin/login");
-  if (!hasRole(admin.role, required)) redirect("/admin?denied=1");
+  if (!admin) redirect(ADMIN_LOGIN_PATH);
+  if (!hasRole(admin.role, required)) redirect(`${ADMIN_HOME_PATH}?denied=1`);
   return admin;
 }
 

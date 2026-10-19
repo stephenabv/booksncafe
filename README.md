@@ -3,7 +3,7 @@
 Website and admin dashboard for Books ’n Cafe: a server-rendered Next.js site backed by PostgreSQL.
 
 - **Public site:** home, books (with `/books/<slug>` detail pages), cafe menu, events, about, cart.
-- **Admin (`/admin`):** business details, opening and holiday hours, page copy and SEO, announcements, FAQs, team, navigation, social links, books, menu, events, coupons and newsletter subscribers.
+- **Admin (sign in at `/syscon/login/admin`, dashboard at `/syscon/admin`):** business details, opening and holiday hours, page copy and SEO, announcements, FAQs, team, navigation, social links, books, menu, events, coupons and newsletter subscribers.
 
 | Stack | |
 | --- | --- |
@@ -24,7 +24,7 @@ cp .env.example .env.local        # then point DATABASE_URL at your local databa
 npm run db:migrate                # create tables
 npm run db:seed                   # import the original site content
 npm run admin:create -- --email you@example.com --role admin --name "Your Name"
-npm run dev                       # http://localhost:3000, admin at /admin
+npm run dev                       # http://localhost:3000, admin sign-in at /syscon/login/admin
 ```
 
 ## Scripts
@@ -45,7 +45,7 @@ npm run dev                       # http://localhost:3000, admin at /admin
 ```
 src/
   app/(site)/        public pages (Server Components, ISR)
-  app/admin/         login and dashboard (dynamic, role-checked)
+  app/syscon/        admin sign-in (login/admin) and dashboard (admin), dynamic, role-checked
   app/sitemap.ts     robots.ts, icons
   components/site    public UI     components/admin  dashboard UI
   lib/               framework-free helpers: pricing, hours, time zones, validation, structured data

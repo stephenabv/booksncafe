@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AdminPageTitle } from "@/components/admin/page-title";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { EDITABLE_PAGES } from "@/server/admin/singletons";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getPage } from "@/server/repositories/site";
@@ -16,7 +17,7 @@ export default async function PagesIndex() {
       <ul className="divide-y divide-stone-100 overflow-hidden rounded-2xl border border-stone-200 bg-white">
         {EDITABLE_PAGES.map((p, i) => (
           <li key={p.slug}>
-            <Link href={`/admin/pages/${p.slug}`} className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-stone-50">
+            <Link href={`${ADMIN_HOME_PATH}/pages/${p.slug}`} className="flex items-center justify-between gap-4 px-5 py-4 hover:bg-stone-50">
               <span>
                 <span className="font-medium">{p.label}</span>
                 <span className="ml-2 text-sm text-stone-500">{p.path}</span>

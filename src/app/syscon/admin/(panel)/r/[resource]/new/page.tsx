@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AdminPageTitle } from "@/components/admin/page-title";
 import { ResourceForm } from "@/components/admin/resource-form";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { saveRecord } from "@/server/actions/admin";
 import { toFormValues } from "@/server/admin/records";
 import { getResource } from "@/server/admin/resources";
@@ -23,13 +24,13 @@ export default async function NewRecordPage({ params }: { params: Params }) {
 
   return (
     <>
-      <AdminPageTitle title={`New ${resource.singular.toLowerCase()}`} back={{ href: `/admin/r/${resource.key}`, label: resource.label }} />
+      <AdminPageTitle title={`New ${resource.singular.toLowerCase()}`} back={{ href: `${ADMIN_HOME_PATH}/r/${resource.key}`, label: resource.label }} />
       <ResourceForm
         fields={resource.fields}
         initialValues={toFormValues(resource.fields, null, settings.timezone)}
         action={saveRecord.bind(null, resource.key, null)}
         submitLabel={`Create ${resource.singular.toLowerCase()}`}
-        cancelHref={`/admin/r/${resource.key}`}
+        cancelHref={`${ADMIN_HOME_PATH}/r/${resource.key}`}
       />
     </>
   );

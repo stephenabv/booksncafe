@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AdminPageTitle } from "@/components/admin/page-title";
 import { ResourceForm } from "@/components/admin/resource-form";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { savePage } from "@/server/actions/admin";
 import { toFormValues } from "@/server/admin/records";
 import { EDITABLE_PAGES, PAGE_FIELDS } from "@/server/admin/singletons";
@@ -24,7 +25,7 @@ export default async function EditPage({ params }: { params: Params }) {
     <>
       <AdminPageTitle
         title={meta.label}
-        back={{ href: "/admin/pages", label: "Pages & SEO" }}
+        back={{ href: `${ADMIN_HOME_PATH}/pages`, label: "Pages & SEO" }}
         actions={
           <a href={meta.path} target="_blank" rel="noopener" className="text-sm font-semibold text-amber-700 underline">
             View page

@@ -1,6 +1,7 @@
 import { desc } from "drizzle-orm";
 import type { Metadata } from "next";
 import { AdminPageTitle } from "@/components/admin/page-title";
+import { ADMIN_HOME_PATH } from "@/lib/admin-routes";
 import { requireAdminPage } from "@/server/auth/guard";
 import { getDb } from "@/server/db/client";
 import { newsletterSubscribers } from "@/server/db/schema";
@@ -19,7 +20,7 @@ export default async function SubscribersPage() {
         actions={
           rows.length > 0 ? (
             // A file download from a Route Handler needs a full request, not client-side navigation.
-            <a href="/admin/subscribers/export" download className="inline-flex min-h-11 items-center rounded-full border border-stone-300 bg-white px-5 text-sm font-semibold hover:bg-stone-50">
+            <a href={`${ADMIN_HOME_PATH}/subscribers/export`} download className="inline-flex min-h-11 items-center rounded-full border border-stone-300 bg-white px-5 text-sm font-semibold hover:bg-stone-50">
               Download CSV
             </a>
           ) : undefined
