@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/*
+ * Brand tokens. The palette follows the Books 'n Cafe banner: deep espresso
+ * browns, warm amber light and a paper-cream reading surface. Text/background
+ * pairs below meet WCAG AA contrast (checked with Lighthouse/axe).
+ */
+@theme {
+  --color-espresso-950: #1c130d;
+  --color-espresso-900: #2b1d14;
+  --color-espresso-800: #3d2a1e;
+  --color-espresso-700: #57402f;
+  --color-espresso-600: #6f5643;
+  --color-cream-50: #fdfaf5;
+  --color-cream-100: #f8f1e6;
+  --color-cream-200: #efe3d0;
+  --color-cream-300: #e2d0b3;
+  --color-amber-brand: #e39a3b;
+  --color-amber-brand-light: #f2b766;
+  --color-amber-ink: #8a4b0c;
+  --color-leaf: #2f6b3a;
+  --color-berry: #9b2c2c;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --animate-fade-up: fade-up 0.5s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-cream-50 font-sans text-espresso-900 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight text-balance;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-amber-brand);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Reusable component utilities (Tailwind v4 @utility so they compose with variants). */
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-primary {
+  @apply btn bg-amber-brand text-espresso-950 hover:bg-amber-brand-light;
+}
+@utility btn-secondary {
+  @apply btn border border-espresso-800/25 bg-white/70 text-espresso-900 hover:border-espresso-800/50 hover:bg-white;
+}
+@utility btn-on-dark {
+  @apply btn border border-cream-100/40 text-cream-50 hover:border-cream-100 hover:bg-white/10;
+}
+
+@utility card {
+  @apply overflow-hidden rounded-2xl border border-cream-200 bg-white shadow-sm transition duration-300 motion-safe:hover:-translate-y-0.5 hover:shadow-md;
+}
+
+@utility eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-amber-ink;
+}
+
+@utility link {
+  @apply font-medium text-amber-ink underline decoration-amber-brand/50 underline-offset-4 transition-colors hover:decoration-amber-ink;
+}
+
+@utility field {
+  @apply block w-full rounded-xl border border-cream-300 bg-white px-3.5 py-2.5 text-sm text-espresso-900 shadow-inner shadow-cream-100 placeholder:text-espresso-600/70 focus:border-amber-brand focus:outline-none focus:ring-2 focus:ring-amber-brand/40;
+}
+
+@utility prose-cafe {
+  & p + p {
+    @apply mt-4;
+  }
+}

@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: booksncafe
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/booksncafe
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/booksncafe_test
+      E2E_DATABASE_URL: postgres://postgres:postgres@localhost:5432/booksncafe_e2e
+      NEXT_PUBLIC_SITE_URL: https://booksncafe.example
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Create test databases
+        run: |
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "create database booksncafe_test"
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "create database booksncafe_e2e"
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run test:integration
+      - name: Check migrations are in sync with the schema
+        run: npx drizzle-kit check
+      - name: Migrate, seed and verify
+        run: |
+          npm run db:migrate
+          npm run db:seed
+          ADMIN_PASSWORD=ci-admin-password-123 npm run admin:create -- --email ci@example.test --role admin
+          npm run db:verify
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: test-results/
+          retention-days: 7
