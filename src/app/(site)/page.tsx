@@ -1,4 +1,4 @@
-import { Clock, MapPin } from "lucide-react";
+import { ChevronDown, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import banner from "@/assets/banner.webp";
@@ -51,7 +51,8 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-espresso-950 text-cream-50">
+      {/* Full-screen hero: fills the viewport below the sticky header (h-16) on every screen size. */}
+      <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden bg-espresso-950 text-cream-50">
         <Image
           src={banner}
           alt=""
@@ -59,14 +60,17 @@ export default async function HomePage() {
           priority
           placeholder="blur"
           sizes="100vw"
-          className="-z-10 object-cover object-center opacity-45"
+          quality={80}
+          className="-z-10 object-cover object-center"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-espresso-950 via-espresso-950/80 to-espresso-950/20" aria-hidden />
-        <div className="container-page py-24 sm:py-32">
-          <div className="max-w-2xl motion-safe:animate-fade-up">
+        {/* Two scrims keep the copy legible over the bright illustration: bottom-up everywhere, left-to-right from sm. */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-espresso-950/95 via-espresso-950/50 to-espresso-950/10" aria-hidden />
+        <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-espresso-950/85 via-espresso-950/35 to-transparent sm:block" aria-hidden />
+        <div className="container-page w-full pb-20 pt-32 sm:pb-24">
+          <div className="max-w-3xl motion-safe:animate-fade-up">
             {settings.tagline && <p className="eyebrow text-amber-brand-light">{settings.tagline}</p>}
-            <h1 className="mt-3 text-4xl font-semibold leading-tight sm:text-6xl">{page?.heading ?? settings.businessName}</h1>
-            {page?.intro && <p className="mt-6 text-lg leading-relaxed text-cream-200">{page.intro}</p>}
+            <h1 className="mt-3 text-5xl font-semibold leading-[1.05] sm:text-7xl">{page?.heading ?? settings.businessName}</h1>
+            {page?.intro && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cream-100 sm:text-xl">{page.intro}</p>}
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/books" className="btn-primary">
                 Explore books
@@ -85,7 +89,16 @@ export default async function HomePage() {
             )}
           </div>
         </div>
+        <a
+          href="#home-content"
+          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs font-medium uppercase tracking-widest text-cream-200 hover:text-amber-brand-light sm:flex"
+        >
+          Scroll
+          <ChevronDown aria-hidden className="size-5 motion-safe:animate-bounce" />
+        </a>
       </section>
+
+      <div id="home-content" className="scroll-mt-16" />
 
       {featuredBooks.length > 0 && (
         <section aria-labelledby="featured-books" className="container-page pt-20">
