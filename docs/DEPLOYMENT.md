@@ -4,7 +4,7 @@
 
 | Concern | Provider | Notes |
 | --- | --- | --- |
-| Hosting | Vercel, existing project `booksncafe` (`booksncafe.vercel.app`) | Next.js is auto-detected. Vercel runs the `vercel-build` script. |
+| Hosting | Vercel, existing project `booksncafe` (`booksncafe.vercel.app`) | `vercel.json` sets the framework to Next.js and the build command to `npm run vercel-build`, overriding the project's old Vite settings (`npm run build:prod`, framework `vite`). |
 | Database | Neon Postgres via the Vercel Marketplace | Free plan as of 2026-10-19: 1 GB storage per project, 100 CU-hours per month, scale-to-zero after 5 min, 10 branches, 6-hour restore window, 5 GB egress per month. |
 | Images | Remote URLs on allow-listed hosts (`images.unsplash.com` plus `NEXT_PUBLIC_IMAGE_HOSTS`) or files in `public/` | Optimized by `next/image`. Vercel Hobby includes a monthly image-optimization quota; check usage if traffic grows. |
 
