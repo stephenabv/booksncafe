@@ -149,3 +149,23 @@ test("newsletter sign-up confirms without revealing existing subscribers", async
     await page.reload();
   }
 });
+
+test("the newsletter field is wide enough for a full email address", async ({ page }) => {
+  await page.goto("/about");
+  const input = page.getByLabel("Email address");
+  const address = "firstname.lastname@example-domain.com";
+  await input.fill(address);
+  // No horizontal scrolling inside the field: everything typed is visible.
+  const clipped = await input.evaluate((el: HTMLInputElement) => el.scrollWidth > el.clientWidth);
+  expect(clipped).toBe(false);
+});
+
+test("the hero fills the screen without a scroll cue", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: /scroll/i })).toHaveCount(0);
+  const hero = await page.locator("main section").first().boundingBox();
+  const viewport = page.viewportSize();
+  // Starts under the transparent header and ends at the bottom of the screen.
+  expect(hero?.y).toBe(0);
+  expect(Math.abs(hero!.y + hero!.height - viewport!.height)).toBeLessThanOrEqual(1);
+});

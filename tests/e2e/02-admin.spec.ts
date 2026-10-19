@@ -125,6 +125,16 @@ test.describe("admin content management", () => {
     expect(html).toContain("123 Sample Street");
     expect(html).toContain("8:00 AM – 8:00 PM");
     expect(html).toContain("CafeOrCoffeeShop");
+
+    // The footer's opening hours start collapsed and expand on demand.
+    await page.goto("/about");
+    const footer = page.locator("footer");
+    const table = footer.getByRole("table", { name: "Opening hours" });
+    await expect(table).toBeHidden();
+    await footer.getByText("Show all days").click();
+    await expect(table.getByRole("rowheader", { name: "Monday" })).toBeVisible();
+    await footer.getByText("Hide", { exact: true }).click();
+    await expect(table).toBeHidden();
   });
 
   test("invalid input is rejected with field errors and keeps what was typed", async ({ page }) => {
@@ -199,6 +209,17 @@ test.describe("admin content management", () => {
     await expect(page.getByRole("complementary", { name: "Announcement" })).toContainText("Book club returns");
     await page.goto("/events/saturday-book-club-2099-05-02");
     await expect(page.getByText("Sat, May 2, 2099, 3:00 PM – 5:00 PM")).toBeVisible();
+
+    // With the announcement bar above it, the homepage hero still ends at the bottom of the screen.
+    await page.goto("/");
+    await expect(page.getByRole("complementary", { name: "Announcement" })).toBeVisible();
+    const hero = page.locator("main section").first();
+    await expect
+      .poll(async () => {
+        const box = await hero.boundingBox();
+        return Math.round(box!.y + box!.height);
+      })
+      .toBe(page.viewportSize()!.height);
   });
 
   test("page SEO fields drive public metadata", async ({ page }) => {

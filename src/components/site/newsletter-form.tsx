@@ -8,8 +8,8 @@ const initial: FormState = { status: "idle", message: "" };
 export function NewsletterForm() {
   const [state, action, pending] = useActionState(subscribeToNewsletter, initial);
   return (
-    <form action={action} className="space-y-2" noValidate={false}>
-      <label htmlFor="newsletter-email" className="text-sm text-paper-200">
+    <form action={action} className="w-full space-y-2" noValidate={false}>
+      <label htmlFor="newsletter-email" className="block text-sm text-paper-200">
         Email address
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -21,10 +21,10 @@ export function NewsletterForm() {
           autoComplete="email"
           maxLength={254}
           placeholder="you@example.com"
-          className="min-h-11 w-full rounded-full border border-paper-50/20 bg-paper-50/5 px-4 text-sm text-paper-50 placeholder:text-paper-300/70 focus:border-amber-brand focus:outline-none"
+          className="min-h-12 w-full min-w-0 flex-1 rounded-full border border-paper-50/20 bg-paper-50/5 px-4 text-base sm:px-5 text-paper-50 placeholder:text-paper-300/70 focus:border-amber-brand focus:outline-none"
           aria-describedby="newsletter-status"
         />
-        <button type="submit" className="btn-primary shrink-0" disabled={pending}>
+        <button type="submit" className="btn-primary min-h-12 shrink-0 sm:px-8" disabled={pending}>
           {pending ? "Subscribing…" : "Subscribe"}
         </button>
       </div>

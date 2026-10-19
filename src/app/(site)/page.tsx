@@ -1,4 +1,4 @@
-import { ChevronDown, Clock, MapPin } from "lucide-react";
+import { Clock, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import banner from "@/assets/banner.webp";
@@ -50,8 +50,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Full-screen hero: pulled up 4rem (-mt-16) beneath the transparent sticky header so it fills the viewport. */}
-      <section className="relative isolate flex -mt-16 min-h-svh items-end overflow-hidden bg-night-950 text-paper-50">
+      {/* Full-screen hero: pulled up 4rem (-mt-16) beneath the transparent sticky header and sized to end at the bottom of the screen, below any announcement bar. */}
+      <section className="relative isolate flex -mt-16 min-h-[calc(100svh-var(--announcement-h,0px))] items-end overflow-hidden bg-night-950 text-paper-50">
         <Image
           src={banner}
           alt=""
@@ -88,16 +88,7 @@ export default async function HomePage() {
             )}
           </div>
         </div>
-        <a
-          href="#home-content"
-          className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs font-medium uppercase tracking-widest text-paper-200 hover:text-amber-brand-light sm:flex"
-        >
-          Scroll
-          <ChevronDown aria-hidden className="size-5 motion-safe:animate-bounce" />
-        </a>
       </section>
-
-      <div id="home-content" className="scroll-mt-16" />
 
       {featuredBooks.length > 0 && (
         <section aria-labelledby="featured-books" className="container-page pt-20">
