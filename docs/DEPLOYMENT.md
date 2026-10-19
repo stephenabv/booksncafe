@@ -19,22 +19,23 @@ See [`.env.example`](../.env.example). All are set per environment in Vercel →
 | `NEXT_PUBLIC_SITE_URL` | `https://<your domain>` | Leave unset (falls back to the production hostname so canonicals never point at previews) | Rebuild after changing. |
 | `NEXT_PUBLIC_IMAGE_HOSTS` | Optional | Optional | Comma-separated extra image hosts. |
 | `SESSION_TTL_HOURS` | Optional (default 12) | Optional | |
-| `RUN_MIGRATIONS_ON_BUILD` | **Leave unset** | `1` | Previews migrate and seed their own disposable Neon branch. The build refuses to migrate production. |
+| `RUN_MIGRATIONS_ON_BUILD` | `1` | `1` | The build migrates, seeds empty tables, bootstraps the first admin and runs `db:verify` before compiling. A failed step fails the build, so a broken database never goes live. |
+| `ADMIN_BOOTSTRAP_EMAIL` / `ADMIN_BOOTSTRAP_PASSWORD` / `ADMIN_BOOTSTRAP_NAME` | Set once (password as **Sensitive**) | Same | Creates the first administrator only when no active one exists; never changes existing accounts. Can be removed after the first deploy. |
 
 ## First-time setup
 
-1. Vercel → `booksncafe` → Storage → **Create Database** → Neon (Free). Connect it to Production, Preview and Development, and enable **Create database branch for deployment** for Preview.
-2. Set `NEXT_PUBLIC_SITE_URL` for Production and `RUN_MIGRATIONS_ON_BUILD=1` for Preview.
-3. Pull production variables locally (`vercel env pull .env.production.local`), then follow the production procedure in [DATA_MIGRATION.md](DATA_MIGRATION.md): migrate, seed, create the owner account, verify.
-4. Merge the PR. Vercel builds with the migrated production database and deploys.
+1. Vercel → `booksncafe` → Storage → **Create Database** → Neon (Free). Connect it to Production, Preview and Development. Enabling **Create database branch for deployment** for Preview gives each preview a disposable copy; without it, previews share the production database.
+2. Set `NEXT_PUBLIC_SITE_URL` for Production, `RUN_MIGRATIONS_ON_BUILD=1` for Production and Preview, and the `ADMIN_BOOTSTRAP_*` variables (password at least 12 characters, marked Sensitive).
+3. Redeploy. The build log shows the migration, seed counts, admin bootstrap and the eight verification checks.
+4. Merge the PR. The production build prepares the production database the same way and deploys.
 5. Smoke test: `/`, `/books`, `/books/1984`, `/menu`, `/events`, `/about`, `/sitemap.xml`, `/robots.txt`, a missing URL (should be 404), `/admin/login`.
 6. Submit `https://<domain>/sitemap.xml` in Google Search Console.
 
 ## Ongoing schema changes
 
 1. Edit `src/server/db/schema.ts`, run `npm run db:generate`, commit the new SQL file.
-2. The PR's preview deployment applies it to its own Neon branch.
-3. Before merging: `npm run db:backup` against production, then `npm run db:migrate`, then merge. Migrations must stay backward-compatible with the running deployment (add columns before using them; remove columns in a later release).
+2. The PR's preview deployment applies it to its own Neon branch (or the shared database without branching).
+3. Before merging, take a backup (`npm run db:backup` or a Neon snapshot). The production build applies the migration before the new deployment goes live, while the previous deployment is still serving, so migrations must stay backward-compatible with it (add columns before using them; remove columns in a later release).
 
 ## How edits reach the public site
 
@@ -44,7 +45,7 @@ Public pages are statically generated with a 5-minute ISR window. Every successf
 
 - [x] Secrets are only in Vercel environment variables. `.env*` is git-ignored except `.env.example`.
 - [x] Database code is imported only by `server-only` modules, so the build fails if it is pulled into a client bundle.
-- [x] Admin accounts are created only with `npm run admin:create`. There is no sign-up route, and the dashboard cannot change roles.
+- [x] Admin accounts are created only with `npm run admin:create`, or once by `admin:bootstrap` from environment variables while no active administrator exists. There is no sign-up route, and the dashboard cannot change roles.
 - [x] Passwords are hashed with scrypt (N=2¹⁵, r=8, p=1, 16-byte salt), and timing is uniform for unknown accounts.
 - [x] Sessions are 256-bit random tokens stored as SHA-256 hashes, in an HttpOnly, Secure, SameSite=Lax `__Host-` cookie that expires after 12 hours. Logout deletes the session row.
 - [x] Every admin page and Server Action checks the session and role on the server. Layouts are not relied on for security.

@@ -22,7 +22,7 @@ The data lives in [`scripts/seed-data.ts`](../scripts/seed-data.ts); [`scripts/s
 
 ## Production procedure
 
-Run these from a trusted machine with the production `DATABASE_URL_UNPOOLED` loaded (for example via `vercel env pull .env.production.local` and exporting it). Nothing here touches the existing live site until step 6.
+On Vercel, steps 3 to 6 run automatically during the build when `RUN_MIGRATIONS_ON_BUILD=1` is set, with the owner account created from the `ADMIN_BOOTSTRAP_*` variables (see [DEPLOYMENT.md](DEPLOYMENT.md#first-time-setup)). To run them by hand instead, use a trusted machine with the production `DATABASE_URL_UNPOOLED` loaded (for example via `vercel env pull .env.production.local` and exporting it). Nothing here touches the existing live site until step 6.
 
 1. **Create the database.** Add Neon from the Vercel Marketplace to the `booksncafe` project (see [DEPLOYMENT.md](DEPLOYMENT.md)).
 2. **Back up first.** Even on a fresh database, take a Neon snapshot from the console. For later runs, `npm run db:backup` writes a JSON snapshot of all content to `./backups/`.

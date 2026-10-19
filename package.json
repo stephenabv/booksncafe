@@ -22,7 +22,8 @@
     "db:seed": "node --import tsx scripts/seed.ts",
     "db:backup": "node --import tsx scripts/backup.ts",
     "db:verify": "node --import tsx scripts/verify.ts",
-    "admin:create": "node --import tsx scripts/create-admin.ts"
+    "admin:create": "node --import tsx scripts/create-admin.ts",
+    "admin:bootstrap": "node --import tsx scripts/bootstrap-admin.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.4",

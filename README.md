@@ -38,6 +38,7 @@ npm run dev                       # http://localhost:3000, admin at /admin
 | `npm run test:e2e` | Builds and serves the app against `E2E_DATABASE_URL` (default `…/booksncafe_e2e`, rebuilt every run). Set `PLAYWRIGHT_CHROMIUM_PATH` to use a preinstalled Chromium. |
 | `npm run db:migrate` / `db:seed` / `db:verify` / `db:backup` / `db:generate` | See [docs/DATABASE.md](docs/DATABASE.md) |
 | `npm run admin:create` | Create an admin, or reset an admin's password or role |
+| `npm run admin:bootstrap` | Create the first admin from `ADMIN_BOOTSTRAP_*` if no active admin exists (used by the Vercel build) |
 
 ## Project layout
 
